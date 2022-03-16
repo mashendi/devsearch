@@ -8,6 +8,8 @@
       <th>Votes</th>
       <th>Created At</th>
       <th></th>
+      <th></th>
+      <th></th>
     </thead>
     <tbody>
       {% for project in projects %}
@@ -16,6 +18,8 @@
           <td>{{project.vote_ratio}}</td>
           <td>{{project.vote_total}}</td>
           <td>{{project.created}}</td>
+          <td><a href="{% url 'update-project' project.id %}">Edit</a></td>
+          <td><a href="{% url 'delete-project' project.id %}" onclick="return confirm('Are you sure? do you want to delete {{project.title}}');">Delete</a></td>
           <td><a href="{% url 'project' project.id %}">View</a></td>
         </tr>
       {% endfor %}
