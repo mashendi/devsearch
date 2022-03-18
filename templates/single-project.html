@@ -1,32 +1,90 @@
-{% extends "main.html" %} {% block content%} 
-<!-- Main Section -->
-<main class="singleProject my-md">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <!-- Icon - IconMonster -->
+  <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />
+  <!-- Mumble UI -->
+  <link rel="stylesheet" href="uikit/styles/uikit.css" />
+  <!-- Dev Search UI -->
+  <link rel="stylesheet" href="styles/app.css" />
+
+  <title>DevSearch - Connect with Developers!</title>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container container--narrow">
+      <a href="/" class="header__logo">
+        <img src="images/logo.svg" alt="DevSearch Logo" />
+      </a>
+      <nav class="header__nav">
+        <input type="checkbox" id="responsive-menu" />
+        <label for="responsive-menu" class="toggle-menu">
+          <span>Menu</span>
+          <div class="toggle-menu__lines"></div>
+        </label>
+        <ul class="header__menu">
+          <li class="header__menuItem"><a href="index.html">Developers</a></li>
+          <li class="header__menuItem"><a href="projects.html">Projects</a></li>
+          <li class="header__menuItem"><a href="inbox.html">Inbox</a></li>
+          <li class="header__menuItem"><a href="account.html">My Account</a></li>
+          <li class="header__menuItem"><a href="login.html" class="btn btn--sub">Login/Sign Up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="singleProject my-md">
     <div class="container">
       <div class="layout">
         <div class="column column--1of3">
           <h3 class="singleProject__subtitle">Tools & Stacks</h3>
           <div class="singleProject__toolStack">
-              {% for tag in project.tags.all %}
-              <span class="tag tag--pill tag--sub tag--lg">
-                  <small>{{tag}}</small>
-                </span>
-                {% endfor %}
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>Figma</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>React Js</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>REST API</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>GraphQL</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>TypeScript</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>Webpack</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>NextJS</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>Postgres</small>
+            </span>
+            <span class="tag tag--pill tag--sub tag--lg">
+              <small>MongoDB</small>
+            </span>
           </div>
-          {% if project.source_link %}
-          <a class="singleProject__liveLink" href="{{project.source_link}}" target="_blank"><i class="im im-external-link"></i>Source Code
+          <a class="singleProject__liveLink" href="#" target="_blank"><i class="im im-external-link"></i>Source Code
           </a>
-          &nbsp;&nbsp;&nbsp;
-          {% endif %}
-          {% if project.demo_link %}
-          <a class="singleProject__liveLink" href="{{project.demo_link}}" target="_blank"><i class="im im-external-link"></i>Show Demo
-          </a>
-          {% endif %}
         </div>
         <div class="column column--2of3">
-          <img class="singleProject__preview" src="{{project.featured_image.url}}" alt="portfolio thumbnail" />
+          <img class="singleProject__preview" src="images/project-c.png" alt="portfolio thumbnail" />
           <a href="profile.html" class="singleProject__developer">Md. Shahriar Parvez</a>
-          <h2 class="singleProject__title">{{project.title}}</h2>
-          <h3 class="singleProject__subtitle">{{proejct.description}}</h3>
+          <h2 class="singleProject__title">Portfolio Landing Page for a Coding Mentor</h2>
+          <h3 class="singleProject__subtitle">About the Project</h3>
           <div class="singleProject__info">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima harum maxime debitis amet voluptates esse
             a perferendis tempora, natus pariatur obcaecati odit quisquam fugit deserunt.
@@ -43,7 +101,7 @@
           <div class="comments">
             <h3 class="singleProject__subtitle">Feedback</h3>
             <h5 class="project--rating">
-              {{project.vote_ratio}}% Postitive Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s"}})
+              36% Postitive Feedback (18 Votes)
             </h5>
 
             <form class="form" action="#" method="POST">
@@ -89,5 +147,6 @@
     </div>
     </div>
   </main>
+</body>
 
-{% endblock content %}
+</html>
