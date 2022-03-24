@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 
-from users.forms import CustomUserCreationForm
+from users.forms import CustomUserCreationForm, ProfileForm
 from .models import Profile
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
@@ -54,7 +54,7 @@ def registerUser(request):
             messages.success(request, 'User created successfully')
 
             login(request, user)
-            return redirect('profiles')
+            return redirect('edit-profile')
 
     context = {'page': page, 'form': form}
     return render(request, 'users/login_register.html', context)
@@ -81,4 +81,15 @@ def account(request):
 
 @login_required(login_url='login')
 def editProfile(request):
-    pass
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+
+            return redirect('account')
+
+    context = {'form': form}
+    return render(request, 'users/profile_form.html', context)
