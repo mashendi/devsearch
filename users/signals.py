@@ -15,6 +15,18 @@ def userCreated(sender, instance, created, **kwargs):
         )
 
 
+@receiver(post_save, sender=Profile)
+def profileUpdated(sender, instance, created, **Kwargs):
+    profile = instance
+    user = profile.user
+
+    if created == False:
+        user.username = profile.username
+        user.first_name = profile.name
+        user.email = profile.email
+        user.save()
+
+
 @receiver(post_delete, sender=Profile)
 def profileDeleted(sender, instance, **kwargs):
     user = instance.user

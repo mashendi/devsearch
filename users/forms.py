@@ -15,3 +15,5 @@ class CustomUserCreationForm(UserCreationForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input input--' + str(field.widget.input_type)})
+
+

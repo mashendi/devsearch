@@ -77,3 +77,8 @@ def account(request):
     profile = request.user.profile
     context = {'profile': profile}
     return render(request, 'users/account.html', context)
+
+
+@login_required(login_url='login')
+def editProfile(request):
+    pass
