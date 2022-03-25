@@ -23,8 +23,10 @@ def createProject(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid:
-            form.save()
-            return redirect('projects')
+            project = form.save(commit=False)
+            project.owner = request.user.profile
+            project.save()
+            return redirect('account')
 
     context = {'form': form}
     return render(request, 'projects/project_form.html', context)
@@ -34,13 +36,14 @@ def createProject(request):
 def updateProject(request, pk):
     profile = request.user.profile
     project = profile.project_set.get(id=pk)
+
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid:
             form.save()
-            return redirect("projects")
+            return redirect("account")
 
     context = {'form': form}
     return render(request, 'projects/project_form.html', context)
