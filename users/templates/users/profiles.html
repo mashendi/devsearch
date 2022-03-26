@@ -16,7 +16,7 @@
               id="formInput#search"
               type="text"
               name="search_query"
-              value= "{{search_query}}"
+              value="{{search_query}}"
               placeholder="Search by developer name"
             />
           </div>
@@ -62,6 +62,7 @@
       </div>
     </div>
   </section>
-  </div>
+
+  {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
 </main>
 {% endblock content %}
