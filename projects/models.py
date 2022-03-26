@@ -5,6 +5,9 @@ from users.models import Profile
 
 
 class Project(models.Model):
+    class Meta:
+        ordering = ['-created']
+
     owner = models.ForeignKey(
         Profile, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=200)
