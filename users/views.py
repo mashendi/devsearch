@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 
-from users.forms import CustomUserCreationForm, ProfileForm
+from users.forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .models import Profile
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
@@ -93,3 +93,20 @@ def editProfile(request):
 
     context = {'form': form}
     return render(request, 'users/profile_form.html', context)
+
+
+@login_required(login_url='login')
+def createSkill(request):
+    profile = request.user.profile
+    form = SkillForm()
+
+    if request.method == 'POST':
+        form = SkillForm(request.POST)
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.owner = profile
+            skill.save()
+            return redirect('account')
+
+    context = {'form': form}
+    return render(request, 'users/skill_form.html', context)
