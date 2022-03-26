@@ -138,6 +138,12 @@ def editSkill(request, pk):
 def deleteSkill(request, pk):
     profile = request.user.profile
     skill = profile.skill_set.get(id=pk)
-    skill.delete()
-    messages.success(request, 'Skill deleted successfully')
-    return redirect('account')
+
+    if request.method == 'POST':
+        skill.delete()
+        messages.success(request, 'Skill deleted successfully')
+
+        return redirect('account')
+
+    context = {'object': skill}
+    return render(request, 'users/delete.html', context)

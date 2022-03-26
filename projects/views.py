@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Project
 from .forms import ProjectForm
 
@@ -26,6 +27,7 @@ def createProject(request):
             project = form.save(commit=False)
             project.owner = request.user.profile
             project.save()
+            messages.success(request, 'Project created successfully')
             return redirect('account')
 
     context = {'form': form}
@@ -43,6 +45,7 @@ def updateProject(request, pk):
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid:
             form.save()
+            messages.success(request, 'Project updated successfully')
             return redirect("account")
 
     context = {'form': form}
@@ -53,5 +56,11 @@ def updateProject(request, pk):
 def deleteProject(request, pk):
     profile = request.user.profile
     project = profile.project_set.get(id=pk)
-    project.delete()
-    return redirect('projects')
+
+    if request.method == 'POST':
+        project.delete()
+        messages.success(request, 'Project deleted successfully')
+        return redirect('account')
+
+    context = {'object': project}
+    return render(request, 'users/delete.html', context)

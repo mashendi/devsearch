@@ -82,7 +82,7 @@
               <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-skill' skill.id %}"
                 ><i class="im im-edit"></i> Edit</a
               >
-              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' skill.id %}"
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' skill.id %}?next=/account"
                 ><i class="im im-x-mark-circle-o"></i> Delete</a
               >
             </td>
@@ -114,7 +114,7 @@
               <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.id %}"
                 ><i class="im im-edit"></i> Edit</a
               >
-              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-project' project.id %}"
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-project' project.id %}?next=/account"
                 ><i class="im im-x-mark-circle-o"></i> Delete</a
               >
             </td>
