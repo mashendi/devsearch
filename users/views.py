@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 
 from users.forms import CustomUserCreationForm, ProfileForm, SkillForm
+from users.utils import searchProfiles
 from .models import Profile
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
@@ -61,8 +62,8 @@ def registerUser(request):
 
 
 def profiles(request):
-    profiles = Profile.objects.all()
-    context = {'profiles': profiles}
+    profiles, search_query = searchProfiles(request)
+    context = {'profiles': profiles, 'search_query': search_query}
     return render(request, 'users/profiles.html', context)
 
 
