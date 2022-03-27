@@ -6,7 +6,7 @@ from users.models import Profile
 
 class Project(models.Model):
     class Meta:
-        ordering = ['-created']
+        ordering = ['-vote_ratio', '-vote_total', 'title']
 
     owner = models.ForeignKey(
         Profile, null=True, blank=True, on_delete=models.SET_NULL)
@@ -24,6 +24,23 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def reviewers(self):
+        return self.review_set.all().values_list('owner__id', flat=True)
+
+    @property
+    def getVoteCount(self):
+        reviews = self.review_set.all()
+        upVotes = reviews.filter(value='up').count()
+        totalVotes = reviews.count()
+
+        ratio = (upVotes / totalVotes) * 100
+
+        self.vote_total = totalVotes
+        self.vote_ratio = ratio
+
+        self.save()
 
 
 class Review(models.Model):
