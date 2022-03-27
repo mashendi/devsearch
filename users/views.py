@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 
-from users.forms import CustomUserCreationForm, ProfileForm, SkillForm
+from users.forms import CustomUserCreationForm, MessageForm, ProfileForm, SkillForm
 from users.utils import paginateProfiles, searchProfiles
 from .models import Message, Profile
 from django.contrib import messages
@@ -168,6 +168,34 @@ def message(request, pk):
     message = profile.messages.get(id=pk)
     if message.is_read == False:
         message.setIsRead
-        
+
     context = {'message': message}
     return render(request, 'users/message.html', context)
+
+
+def createMessage(request, pk):
+    recipient = Profile.objects.get(id=pk)
+    form = MessageForm()
+
+    try:
+        sender = request.user.profile
+    except:
+        sender = None
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                message.name = sender.name
+                message.email = sender.email
+
+            message.save()
+            messages.success(request, 'Message sent successfully')
+            return redirect('profile', pk=recipient.id)
+
+    context = {'form': form, 'recipient': recipient}
+    return render(request, 'users/message_form.html', context)
