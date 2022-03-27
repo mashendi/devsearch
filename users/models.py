@@ -58,3 +58,8 @@ class Message(models.Model):
 
     def __str__(self):
         return self.subject
+
+    @property
+    def setIsRead(self):
+        self.is_read = True
+        self.save()

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from users.forms import CustomUserCreationForm, ProfileForm, SkillForm
 from users.utils import paginateProfiles, searchProfiles
-from .models import Profile
+from .models import Message, Profile
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -160,3 +160,14 @@ def inbox(request):
     unreadCount = messageRequests.filter(is_read=False).count()
     context = {'messageRequests': messageRequests, 'unreadCount': unreadCount}
     return render(request, 'users/inbox.html', context)
+
+
+@login_required(login_url='login')
+def message(request, pk):
+    profile = request.user.profile
+    message = profile.messages.get(id=pk)
+    if message.is_read == False:
+        message.setIsRead
+        
+    context = {'message': message}
+    return render(request, 'users/message.html', context)
